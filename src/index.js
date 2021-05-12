@@ -24,7 +24,7 @@ import './index.css';
       squares[i] = this.state.xIsNext ? 'X' : 'O';
       this.setState({
         squares: squares,
-        xIsNext: true,
+        xIsNext: !this.state.xIsNext,
       });
     }
 
@@ -37,7 +37,7 @@ import './index.css';
     }
   
     render() {
-      const status = 'Next player: X';
+      const status = 'Next player: ' + (this.state.xIsNext ? 'X' : 'O');
   
       return (
         <div>

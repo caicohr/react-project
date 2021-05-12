@@ -41,28 +41,35 @@ import './index.css';
 
     handleClick(i) {
       const squares = this.state.squares.slice();
+      //ignore clicks when square is already filled or someone already has won the round
+      if (calculateWinner(squares) || squares[i]) {
+        return;
+      }
+      // changes the letter to render on the square
       squares[i] = this.state.xIsNext ? 'X' : 'O';
+      //setting the state
       this.setState({
-        squares: squares,
-        xIsNext: !this.state.xIsNext,
+        squares: squares, //the square clicked
+        xIsNext: !this.state.xIsNext, //if a square is clicked, xIsNext will change its value opposite to the current value
       });
     }
 
+    //method inside Board
     renderSquare(i) {
-      return (
-      <Square value={this.state.squares[i]}
-      onClick= {() => this.handleClick(i)}
+      return ( //what it will return
+      <Square value={this.state.squares[i]} //what square we're calling this method into
+      onClick= {() => this.handleClick(i)} // calls handleClick(i) method inside this(Board)
       />
       );
     }
   
-    render() {
-      const winner = calculateWinner(this.state.squares);
+    render() { //what this Board renders
+      const winner = calculateWinner(this.state.squares); // variable winner get its value using calculateWinner method
       let status;
-      if (winner) {
-        status = 'Winner: ' + winner;
-      } else {
-        status = 'Next player: ' + (this.state.xIsNext ? 'X' : 'O');
+      if (winner) { // if winner has value,
+        status = 'Winner: ' + winner; //set status to the winner
+      } else { // if we still don't have a value of the winner,
+        status = 'Next player: ' + (this.state.xIsNext ? 'X' : 'O'); //Change player
       }
   
       return (

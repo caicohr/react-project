@@ -96,6 +96,16 @@ import './index.css';
   }
   
   class Game extends React.Component {
+    //setting up initial state within constructor
+    constructor(props) {
+      super(props);
+      this.state = {
+        history: [{
+          squares: Array(9).fill(null),
+        }],
+        xIsNext: true,
+      };
+    }
     render() {
       return (
         <div className="game">

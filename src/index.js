@@ -82,7 +82,7 @@ import './index.css';
     jumpTo(step) {
       this.setState({
         //to update stepNumber
-        stepNumber = step,
+        stepNumber: step,
         //set boolean xIsNext if step is an even number
         xIsNext: (step % 2) === 0,
       });

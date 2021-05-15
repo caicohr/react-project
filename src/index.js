@@ -56,18 +56,9 @@ import './index.css';
         );
       }
   
-    render() { //what this Board renders
-      const winner = calculateWinner(this.state.squares); // variable winner get its value using calculateWinner method
-      let status;
-      if (winner) { // if winner has value,
-        status = 'Winner: ' + winner; //set status to the winner
-      } else { // if we still don't have a value of the winner,
-        status = 'Next player: ' + (this.state.xIsNext ? 'X' : 'O'); //Change player
-      }
-  
+    render() {
       return (
         <div>
-          <div className="status">{status}</div>
           <div className="board-row">
             {this.renderSquare(0)}
             {this.renderSquare(1)}
@@ -100,13 +91,29 @@ import './index.css';
       };
     }
     render() {
+      //display game's status
+      const history = this.state.history;
+      const current = history[history.length - 1];
+      const winner = calculateWinner(current.squares);
+      let status;
+      const float1 = .1;
+      const float2 = .2;
+      const float3 = float1 + float2;
+      if (winner) {
+        status = 'Winner: ' + winner + ' Answer to float .1 + .2 is: ' + float3;
+      } else {
+        status = 'Next player: ' + (this.state.xIsNext ? 'X' : 'O');
+      }
       return (
         <div className="game">
           <div className="game-board">
-            <Board />
+            <Board
+              squares = {current.squares}
+              onClick = {(i) => this.handleClick(i)}
+            />
           </div>
           <div className="game-info">
-            <div>{/* status */}</div>
+            <div>{ status }</div>
             <ol>{/* TODO */}</ol>
           </div>
         </div>

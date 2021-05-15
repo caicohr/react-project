@@ -31,21 +31,6 @@ import './index.css';
   }
   
   class Board extends React.Component {
-    handleClick(i) {
-      const squares = this.state.squares.slice();
-      //ignore clicks when square is already filled or someone already has won the round
-      if (calculateWinner(squares) || squares[i]) {
-        return;
-      }
-      // changes the letter to render on the square
-      squares[i] = this.state.xIsNext ? 'X' : 'O';
-      //setting the state
-      this.setState({
-        squares: squares, //the square clicked
-        xIsNext: !this.state.xIsNext, //if a square is clicked, xIsNext will change its value opposite to the current value
-      });
-    }
-
     //method inside Board
     renderSquare(i) {
       return ( //what it will return
@@ -90,6 +75,26 @@ import './index.css';
         xIsNext: true,
       };
     }
+
+    handleClick(i) {
+      const history = this.state.history;
+      const current = history[history.length - 1];
+      const squares = current.squares.slice();
+      //ignore clicks when square is already filled or someone already has won the round
+      if (calculateWinner(squares) || squares[i]) {
+        return;
+      }
+      // changes the letter to render on the square
+      squares[i] = this.state.xIsNext ? 'X' : 'O';
+      //setting the state
+      this.setState({
+        history: history.concat([{ //how to concatenate arrays for immutability
+          squares: squares,
+        }]),
+        xIsNext: !this.state.xIsNext, //if a square is clicked, xIsNext will change its value opposite to the current value
+      });
+    }
+
     render() {
       //display game's status
       const history = this.state.history;

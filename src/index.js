@@ -31,14 +31,6 @@ import './index.css';
   }
   
   class Board extends React.Component {
-    constructor(props) {
-      super(props);
-      this.state = {
-        squares: Array(9).fill(null),
-        xIsNext: true,
-      };
-    }
-
     handleClick(i) {
       const squares = this.state.squares.slice();
       //ignore clicks when square is already filled or someone already has won the round
@@ -57,11 +49,12 @@ import './index.css';
     //method inside Board
     renderSquare(i) {
       return ( //what it will return
-      <Square value={this.state.squares[i]} //what square we're calling this method into
-      onClick= {() => this.handleClick(i)} // calls handleClick(i) method inside this(Board)
-      />
-      );
-    }
+        <Square
+        value={this.props.squares[i]} //sending states through props
+        onClick= {() => this.props.onClick(i)} // will call props.onClick method
+        />
+        );
+      }
   
     render() { //what this Board renders
       const winner = calculateWinner(this.state.squares); // variable winner get its value using calculateWinner method

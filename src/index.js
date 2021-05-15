@@ -89,7 +89,8 @@ import './index.css';
     }
 
     handleClick(i) {
-      const history = this.state.history;
+      //go back in one of the histories then throw away the future moves from the current stepNumber
+      const history = this.state.history.slice(0, this.state.stepNumber +1);
       const current = history[history.length - 1];
       const squares = current.squares.slice();
       //ignore clicks when square is already filled or someone already has won the round
@@ -103,6 +104,7 @@ import './index.css';
         history: history.concat([{ //how to concatenate arrays for immutability
           squares: squares,
         }]),
+        stepNumber: history.length, //setting the stepNumber according to array history's length meaning we will show the most current step
         xIsNext: !this.state.xIsNext, //if a square is clicked, xIsNext will change its value opposite to the current value
       });
     }
@@ -110,7 +112,7 @@ import './index.css';
     render() {
       //display game's status
       const history = this.state.history;
-      const current = history[history.length - 1];
+      const current = history[this.state.stepNumber];//show the current selected move accotding to stepNumber
       const winner = calculateWinner(current.squares);
       
       const moves = history.map((step, move) => {

@@ -73,7 +73,19 @@ import './index.css';
           squares: Array(9).fill(null),
         }],
         xIsNext: true,
+        //add state to know which step we are for rendering history
+        stepNumber: 0,
       };
+    }
+
+    //method to change board history depending on the step
+    jumpTo(step) {
+      this.setState({
+        //to update stepNumber
+        stepNumber = step,
+        //set boolean xIsNext if step is an even number
+        xIsNext: (step % 2) === 0,
+      });
     }
 
     handleClick(i) {
